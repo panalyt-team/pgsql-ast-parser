@@ -4,7 +4,6 @@ package-lock.json
 .nyc_output
 coverage
 dist
-lib
 
 # Vim swap files
 [._]*.s[a-v][a-z]
