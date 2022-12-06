@@ -85,10 +85,10 @@ export interface IAstPartialMapper {
     alterSequence?(seq: a.AlterSequenceStatement): a.Statement | nil;
     begin?(begin: a.BeginStatement): a.Statement | nil;
 }
-export declare type IAstFullMapper = {
+export type IAstFullMapper = {
     [key in keyof IAstPartialMapper]-?: IAstPartialMapper[key];
 };
-export declare type IAstMapper = IAstFullMapper & {
+export type IAstMapper = IAstFullMapper & {
     /** Forces the next call to use the default implementation, not yours */
     super(): IAstMapper;
 };
@@ -109,8 +109,8 @@ export declare type IAstMapper = IAstFullMapper & {
  * ```
  */
 export declare function astMapper(modifierBuilder: MapperBuilder): IAstMapper;
-export declare type MapperBuilder = (defaultImplem: IAstMapper) => IAstPartialMapper;
-declare type PartialNil<T> = {
+export type MapperBuilder = (defaultImplem: IAstMapper) => IAstPartialMapper;
+type PartialNil<T> = {
     [P in keyof T]?: T[P] | nil;
 };
 /**

@@ -1,6 +1,6 @@
 import { nil } from '../utils';
 export declare function locationOf(node: PGNode): NodeLocation;
-export declare type Statement = SelectStatement | CreateTableStatement | CreateSequenceStatement | CreateIndexStatement | CreateExtensionStatement | CommitStatement | InsertStatement | UpdateStatement | ShowStatement | PrepareStatement | DeallocateStatement | DeleteStatement | WithStatement | RollbackStatement | TablespaceStatement | CreateViewStatement | CreateMaterializedViewStatement | RefreshMaterializedViewStatement | AlterTableStatement | AlterIndexStatement | AlterSequenceStatement | SetGlobalStatement | SetTimezone | CreateEnumType | CreateCompositeType | TruncateTableStatement | DropStatement | CommentStatement | CreateSchemaStatement | WithRecursiveStatement | RaiseStatement | ValuesStatement | CreateFunctionStatement | DropFunctionStatement | DoStatement | BeginStatement | StartTransactionStatement;
+export type Statement = SelectStatement | CreateTableStatement | CreateSequenceStatement | CreateIndexStatement | CreateExtensionStatement | CommitStatement | InsertStatement | UpdateStatement | ShowStatement | PrepareStatement | DeallocateStatement | DeleteStatement | WithStatement | RollbackStatement | TablespaceStatement | CreateViewStatement | CreateMaterializedViewStatement | RefreshMaterializedViewStatement | AlterTableStatement | AlterIndexStatement | AlterSequenceStatement | SetGlobalStatement | SetTimezone | CreateEnumType | CreateCompositeType | TruncateTableStatement | DropStatement | CommentStatement | CreateSchemaStatement | WithRecursiveStatement | RaiseStatement | ValuesStatement | CreateFunctionStatement | DropFunctionStatement | DoStatement | BeginStatement | StartTransactionStatement;
 export interface PGNode {
     _location?: NodeLocation;
 }
@@ -46,7 +46,7 @@ export interface ReturnsTable extends PGNode {
         type: DataTypeDef;
     }[];
 }
-export declare type FunctionArgumentMode = 'in' | 'out' | 'inout' | 'variadic';
+export type FunctionArgumentMode = 'in' | 'out' | 'inout' | 'variadic';
 export interface FunctionArgument extends PGNode {
     name?: Name;
     type: DataTypeDef;
@@ -185,7 +185,7 @@ export interface AlterIndexStatement extends PGNode {
     ifExists?: boolean;
     change: IndexAlteration;
 }
-export declare type IndexAlteration = IndexAlterationRename | IndexAlterationSetTablespace;
+export type IndexAlteration = IndexAlterationRename | IndexAlterationSetTablespace;
 export interface IndexAlterationRename {
     type: 'rename';
     to: QName;
@@ -241,7 +241,7 @@ export interface TableAlterationAddConstraint extends PGNode {
     type: 'add constraint';
     constraint: TableConstraint;
 }
-export declare type TableAlteration = TableAlterationRename | TableAlterationRenameColumn | TableAlterationRenameConstraint | TableAlterationAddColumn | TableAlterationDropColumn | TableAlterationAlterColumn | TableAlterationAddConstraint | TableAlterationOwner | TableAlterationDropConstraint;
+export type TableAlteration = TableAlterationRename | TableAlterationRenameColumn | TableAlterationRenameConstraint | TableAlterationAddColumn | TableAlterationDropColumn | TableAlterationAlterColumn | TableAlterationAddConstraint | TableAlterationOwner | TableAlterationDropConstraint;
 export interface TableAlterationOwner extends PGNode {
     type: 'owner';
     to: Name;
@@ -266,7 +266,7 @@ export interface AlterColumnAddGenerated extends PGNode {
 export interface AlterColumnSimple extends PGNode {
     type: 'drop default' | 'set not null' | 'drop not null';
 }
-export declare type AlterColumn = AlterColumnSetType | AlterColumnSetDefault | AlterColumnAddGenerated | AlterColumnSimple;
+export type AlterColumn = AlterColumnSetType | AlterColumnSetDefault | AlterColumnAddGenerated | AlterColumnSimple;
 /**
  * FROM https://www.postgresql.org/docs/12/ddl-constraints.html
  *
@@ -282,7 +282,7 @@ export declare type AlterColumn = AlterColumnSetType | AlterColumnSetDefault | A
  * Note that these do not excuse you from observing any constraints.
  * For example, if an action specifies SET DEFAULT but the default value would not satisfy the foreign key constraint, the operation will fail.
  */
-export declare type ConstraintAction = 'cascade' | 'no action' | 'restrict' | 'set null' | 'set default';
+export type ConstraintAction = 'cascade' | 'no action' | 'restrict' | 'set null' | 'set default';
 export interface CreateIndexStatement extends PGNode {
     type: 'create index';
     table: QName;
@@ -383,7 +383,7 @@ export interface QColumn extends PGNode {
     column: string;
     schema?: string;
 }
-export declare type DataTypeDef = ArrayDataTypeDef | BasicDataTypeDef;
+export type DataTypeDef = ArrayDataTypeDef | BasicDataTypeDef;
 export interface ArrayDataTypeDef extends PGNode {
     kind: 'array';
     arrayOf: DataTypeDef;
@@ -395,7 +395,7 @@ export interface BasicDataTypeDef extends QName, PGNode {
     /** varchar(length), numeric(precision, scale), ... */
     config?: number[];
 }
-export declare type ColumnConstraint = ColumnConstraintSimple | ColumnConstraintDefault | AlterColumnAddGenerated | ColumnConstraintReference | ColumnConstraintCheck;
+export type ColumnConstraint = ColumnConstraintSimple | ColumnConstraintDefault | AlterColumnAddGenerated | ColumnConstraintReference | ColumnConstraintCheck;
 export interface ColumnConstraintSimple extends PGNode {
     type: 'unique' | 'primary key' | 'not null' | 'null';
     constraintName?: Name;
@@ -420,8 +420,8 @@ export interface TableReference {
     onUpdate?: ConstraintAction;
     match?: 'full' | 'partial' | 'simple';
 }
-export declare type TableConstraint = TableConstraintUnique | TableConstraintForeignKey | TableConstraintCheck;
-export declare type TableConstraintCheck = ColumnConstraintCheck;
+export type TableConstraint = TableConstraintUnique | TableConstraintForeignKey | TableConstraintCheck;
+export type TableConstraintCheck = ColumnConstraintCheck;
 export interface TableConstraintUnique extends PGNode {
     type: 'primary key' | 'unique';
     constraintName?: Name;
@@ -435,7 +435,7 @@ export interface ColumnConstraintCheck extends PGNode {
     constraintName?: Name;
     expr: Expr;
 }
-export declare type WithStatementBinding = SelectStatement | WithStatement | WithRecursiveStatement | InsertStatement | UpdateStatement | DeleteStatement;
+export type WithStatementBinding = SelectStatement | WithStatement | WithRecursiveStatement | InsertStatement | UpdateStatement | DeleteStatement;
 export interface WithStatement extends PGNode {
     type: 'with';
     bind: {
@@ -451,7 +451,7 @@ export interface WithRecursiveStatement extends PGNode {
     bind: SelectFromUnion;
     in: WithStatementBinding;
 }
-export declare type SelectStatement = SelectFromStatement | SelectFromUnion | ValuesStatement | WithStatement | WithRecursiveStatement;
+export type SelectStatement = SelectFromStatement | SelectFromUnion | ValuesStatement | WithStatement | WithRecursiveStatement;
 export interface SelectFromStatement extends PGNode {
     type: 'select';
     columns?: SelectedColumn[] | nil;
@@ -496,7 +496,7 @@ export interface SelectedColumn extends PGNode {
     expr: Expr;
     alias?: Name;
 }
-export declare type From = FromTable | FromStatement | FromCall;
+export type From = FromTable | FromStatement | FromCall;
 export interface FromCall extends ExprCall, PGNode {
     alias?: TableAliasName;
     join?: JoinClause | nil;
@@ -530,8 +530,8 @@ export interface JoinClause extends PGNode {
     on?: Expr | nil;
     using?: Name[] | nil;
 }
-export declare type JoinType = 'INNER JOIN' | 'LEFT JOIN' | 'RIGHT JOIN' | 'FULL JOIN' | 'CROSS JOIN';
-export declare type Expr = ExprRef | ExprParameter | ExprList | ExprArrayFromSelect | ExprNull | ExprExtract | ExprInteger | ExprDefault | ExprMember | ExprValueKeyword | ExprArrayIndex | ExprNumeric | ExprString | ExprCase | ExprBinary | ExprUnary | ExprCast | ExprBool | ExprCall | SelectStatement | WithStatement | ExprConstant | ExprTernary | ExprOverlay | ExprSubstring;
+export type JoinType = 'INNER JOIN' | 'LEFT JOIN' | 'RIGHT JOIN' | 'FULL JOIN' | 'CROSS JOIN';
+export type Expr = ExprRef | ExprParameter | ExprList | ExprArrayFromSelect | ExprNull | ExprExtract | ExprInteger | ExprDefault | ExprMember | ExprValueKeyword | ExprArrayIndex | ExprNumeric | ExprString | ExprCase | ExprBinary | ExprUnary | ExprCast | ExprBool | ExprCall | SelectStatement | WithStatement | ExprConstant | ExprTernary | ExprOverlay | ExprSubstring;
 /**
  * Handle special syntax: overlay('12345678' placing 'ab' from 2 for 4)
  */
@@ -549,14 +549,15 @@ export interface ExprSubstring extends PGNode {
     from?: Expr | nil;
     for?: Expr | nil;
 }
-export declare type LogicOperator = 'OR' | 'AND';
-export declare type EqualityOperator = 'IN' | 'NOT IN' | 'LIKE' | 'NOT LIKE' | 'ILIKE' | 'NOT ILIKE' | '=' | '!=';
-export declare type MathOpsBinary = '|' | '&' | '>>' | '^' | '#' | '<<' | '>>';
-export declare type ComparisonOperator = '>' | '>=' | '<' | '<=' | '@>' | '<@' | '?' | '?|' | '?&' | '#>>' | '~' | '~*' | '!~' | '!~*';
-export declare type AdditiveOperator = '||' | '-' | '#-' | '&&' | '+';
-export declare type MultiplicativeOperator = '*' | '%' | '/';
-export declare type ConstructOperator = 'AT TIME ZONE';
-export declare type BinaryOperator = LogicOperator | EqualityOperator | ComparisonOperator | AdditiveOperator | MultiplicativeOperator | MathOpsBinary | ConstructOperator;
+export type LogicOperator = 'OR' | 'AND';
+export type EqualityOperator = 'IN' | 'NOT IN' | 'LIKE' | 'NOT LIKE' | 'ILIKE' | 'NOT ILIKE' | '=' | '!=';
+export type MathOpsBinary = '|' | '&' | '>>' | '^' | '#' | '<<' | '>>';
+export type ComparisonOperator = '>' | '>=' | '<' | '<=' | '@>' | '<@' | '?' | '?|' | '?&' | '#>>' | '~' | '~*' | '!~' | '!~*';
+export type ComparisonPredicate = 'IS DISTINCT FROM' | 'IS NOT DISTINCT FROM';
+export type AdditiveOperator = '||' | '-' | '#-' | '&&' | '+';
+export type MultiplicativeOperator = '*' | '%' | '/';
+export type ConstructOperator = 'AT TIME ZONE';
+export type BinaryOperator = LogicOperator | EqualityOperator | ComparisonOperator | ComparisonPredicate | AdditiveOperator | MultiplicativeOperator | MathOpsBinary | ConstructOperator;
 export interface ExprBinary extends PGNode {
     type: 'binary';
     left: Expr;
@@ -569,7 +570,7 @@ export interface ExprConstant extends PGNode {
     dataType: DataTypeDef;
     value: any;
 }
-export declare type ExprLiteral = ExprConstant | ExprInteger | ExprNumeric | ExprString | ExprBool | ExprNull;
+export type ExprLiteral = ExprConstant | ExprInteger | ExprNumeric | ExprString | ExprBool | ExprNull;
 export interface ExprTernary extends PGNode {
     type: 'ternary';
     value: Expr;
@@ -582,7 +583,7 @@ export interface ExprCast extends PGNode {
     to: DataTypeDef;
     operand: Expr;
 }
-export declare type UnaryOperator = '+' | '-' | 'NOT' | 'IS NULL' | 'IS NOT NULL' | 'IS TRUE' | 'IS FALSE' | 'IS NOT TRUE' | 'IS NOT FALSE';
+export type UnaryOperator = '+' | '-' | 'NOT' | 'IS NULL' | 'IS NOT NULL' | 'IS TRUE' | 'IS FALSE' | 'IS NOT TRUE' | 'IS NOT FALSE';
 export interface ExprUnary extends PGNode {
     type: 'unary';
     operand: Expr;
@@ -608,7 +609,7 @@ export interface ExprValueKeyword extends PGNode {
     type: 'keyword';
     keyword: ValueKeyword;
 }
-export declare type ValueKeyword = 'current_catalog' | 'current_date' | 'current_role' | 'current_schema' | 'current_timestamp' | 'current_time' | 'localtimestamp' | 'localtime' | 'session_user' | 'user' | 'current_user' | 'distinct';
+export type ValueKeyword = 'current_catalog' | 'current_date' | 'current_role' | 'current_schema' | 'current_timestamp' | 'current_time' | 'localtimestamp' | 'localtime' | 'session_user' | 'user' | 'current_user' | 'distinct';
 /**
  * Function calls.
  *
@@ -692,7 +693,7 @@ export interface SetTimezone extends PGNode {
     type: 'set timezone';
     to: SetTimezoneValue;
 }
-export declare type SetTimezoneValue = {
+export type SetTimezoneValue = {
     type: 'value';
     value: number | string;
 } | {
@@ -701,7 +702,7 @@ export declare type SetTimezoneValue = {
     type: 'interval';
     value: string;
 };
-declare type SetGlobalValueRaw = {
+type SetGlobalValueRaw = {
     type: 'value';
     value: number | string;
 } | {
@@ -709,7 +710,7 @@ declare type SetGlobalValueRaw = {
     doubleQuoted?: true;
     name: string;
 };
-export declare type SetGlobalValue = SetGlobalValueRaw | {
+export type SetGlobalValue = SetGlobalValueRaw | {
     type: 'default';
 } | {
     type: 'list';
@@ -738,7 +739,7 @@ export interface AlterSequenceStatement extends PGNode {
     ifExists?: boolean;
     change: AlterSequenceChange;
 }
-export declare type AlterSequenceChange = AlterSequenceSetOptions | AlterSequenceOwnerTo | AlterSequenceRename | AlterSequenceSetSchema;
+export type AlterSequenceChange = AlterSequenceSetOptions | AlterSequenceOwnerTo | AlterSequenceRename | AlterSequenceSetSchema;
 export interface AlterSequenceSetOptions extends CreateSequenceOptions, PGNode {
     type: 'set options';
     restart?: true | number;
@@ -755,7 +756,7 @@ export interface AlterSequenceSetSchema extends PGNode {
     type: 'set schema';
     newSchema: Name;
 }
-export declare type GeometricLiteral = Point | Line | Segment | Box | Path | Polygon | Circle;
+export type GeometricLiteral = Point | Line | Segment | Box | Path | Polygon | Circle;
 export interface Point {
     x: number;
     y: number;
@@ -766,13 +767,13 @@ export interface Line {
     b: number;
     c: number;
 }
-export declare type Segment = [Point, Point];
-export declare type Box = [Point, Point];
+export type Segment = [Point, Point];
+export type Box = [Point, Point];
 export interface Path {
     closed: boolean;
     path: Point[];
 }
-export declare type Polygon = Point[];
+export type Polygon = Point[];
 export interface Circle {
     c: Point;
     r: number;

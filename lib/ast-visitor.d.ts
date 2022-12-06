@@ -1,12 +1,12 @@
 import { IAstPartialMapper } from './ast-mapper';
 import { ReplaceReturnType } from './utils';
-export declare type IAstPartialVisitor = {
+export type IAstPartialVisitor = {
     [key in keyof IAstPartialMapper]: ReplaceReturnType<IAstPartialMapper[key], any>;
 };
-export declare type IAstFullVisitor = {
+export type IAstFullVisitor = {
     [key in keyof IAstPartialVisitor]-?: IAstPartialVisitor[key];
 };
-export declare type IAstVisitor = IAstFullVisitor & {
+export type IAstVisitor = IAstFullVisitor & {
     super(): IAstVisitor;
 };
 /**
