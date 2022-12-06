@@ -786,12 +786,14 @@ export type EqualityOperator = 'IN' | 'NOT IN' | 'LIKE' | 'NOT LIKE' | 'ILIKE' |
 // see https://www.postgresql.org/docs/12/functions-math.html
 export type MathOpsBinary = '|' | '&' | '>>' | '^' | '#' | '<<' | '>>';
 export type ComparisonOperator = '>' | '>=' | '<' | '<=' | '@>' | '<@' | '?' | '?|' | '?&' | '#>>' | '~' | '~*' | '!~' | '!~*';
+export type ComparisonPredicate = 'IS DISTINCT FROM' | 'IS NOT DISTINCT FROM';
 export type AdditiveOperator = '||' | '-' | '#-' | '&&' | '+';
 export type MultiplicativeOperator = '*' | '%' | '/';
 export type ConstructOperator = 'AT TIME ZONE';
 export type BinaryOperator = LogicOperator
     | EqualityOperator
     | ComparisonOperator
+    | ComparisonPredicate
     | AdditiveOperator
     | MultiplicativeOperator
     | MathOpsBinary
