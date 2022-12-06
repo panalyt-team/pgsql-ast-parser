@@ -1,6 +1,6 @@
 import { Interval } from '../syntax/ast';
-declare type E = [keyof Interval, number];
-declare type K = E | K[];
+type E = [keyof Interval, number];
+type K = E | K[];
 export declare function buildInterval(orig: string, vals: 'invalid' | K): Interval;
 /** Returns a normalized copy of the given interval */
 export declare function normalizeInterval(value: Interval): Interval;

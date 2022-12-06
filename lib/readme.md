@@ -1,4 +1,12 @@
 
+In order to apply changes (and have them reflected in panalyt-ui project), you need to follow these steps:
+Change the code in this repository.
+Run npm run build in it. Some of the files in lib folder will be updated.
+Commit & push.
+Go to our repo and find pgsql-ast-parser in package-lock.json. Remove this entry (highlighted on the screenshot). It is necessary because when installing from github, npm adds a commit hash in package-lock.json entry and if you don't do this it will keep thinking that no changes have to be applied. Think of it as of a garbage way to do versioning :slightly_smiling_face:
+Run npm i in our repo. You're all set.
+
+
 <p align="center">
   <a href="https://npmjs.org/package/pgsql-ast-parser"><img src="http://img.shields.io/npm/v/pgsql-ast-parser.svg"></a>
   <a href="https://npmjs.org/package/pgsql-ast-parser"><img src="https://img.shields.io/npm/dm/pgsql-ast-parser.svg"></a>
