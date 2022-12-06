@@ -70,9 +70,12 @@ expr_paren -> lparen (expr_or_select | expr_list_many) rparen {% get(1) %}
 expr_or -> expr_binary[op_single[%kw_or], expr_or, expr_and]
 expr_and -> expr_binary[op_single[%kw_and], expr_and, expr_not]
 expr_not -> expr_left_unary[op_single[%kw_not], expr_not, expr_eq]
-expr_eq -> expr_binary[op_scopable[(%op_eq | %op_neq)], expr_eq, expr_is]
+expr_eq -> expr_binary[op_scopable[(%op_eq | %op_neq)], expr_eq, expr_isdistinctfrom]
 
 expr_star -> star  {% x => track(x, { type: 'ref', name: '*' }) %}
+
+expr_isdistinctfrom -> expr_binary[ (%kw_is %kw_distinct %kw_from) {% x => track(x, { op: 'IS DISTINCT FROM' }) %}, expr_isdistinctfrom, expr_isnotdistinctfrom]
+expr_isnotdistinctfrom -> expr_binary[ (%kw_is %kw_not %kw_distinct %kw_from) {% x => track(x, { op: 'IS NOT DISTINCT FROM' }) %}, expr_isnotdistinctfrom, expr_is]
 
 expr_is
     -> (expr_is | expr_paren) (%kw_isnull | %kw_is %kw_null) {% x => track(x, { type: 'unary', op: 'IS NULL', operand: unwrap(x[0]) }) %}
