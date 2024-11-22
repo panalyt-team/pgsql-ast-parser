@@ -90,6 +90,6 @@ describe('SQL builder', () => {
 
     it('processes limit & offset correctly', () => {
         expect(stm(`select foo, bar from test offset 5 limit 10`))
-            .to.equal(`SELECT foo , bar  FROM test   OFFSET (5) LIMIT (10)`);
+            .to.equal(`SELECT foo , bar  FROM test   LIMIT (10) OFFSET (5)`);
     })
 });
